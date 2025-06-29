@@ -1193,23 +1193,23 @@ fn parse_project_path(project: Option<&str>) -> Result<(PathBuf, PathBuf), Strin
         let yaml_path = project_path.join("mantle.yaml");
 
         if yml_path.exists() {
-            return Ok((project_path, yml_path));
+            Ok((project_path, yml_path))
         } else if yaml_path.exists() {
-            return Ok((project_path, yaml_path));
+            Ok((project_path, yaml_path))
         } else {
-            return Err(format!(
+            Err(format!(
                 "No config file found. Looked for mantle.yml and mantle.yaml in {}",
                 project_path.display()
-            ));
+            ))
         }
     } else if project_path.is_file() {
         if project_path.exists() {
-            return Ok((project_path.parent().unwrap().into(), project_path));
+            Ok((project_path.parent().unwrap().into(), project_path))
         } else {
-            return Err(format!("Config file {} not found", project_path.display()));
+            Err(format!("Config file {} not found", project_path.display()))
         }
     } else {
-        return Err(format!("Unable to load project path: {}", project));
+        Err(format!("Unable to load project path: {}", project))
     }
 }
 
